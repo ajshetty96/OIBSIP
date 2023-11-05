@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20210902/pngtree-high-temperature-summer-sun-blue-hot-summer-image_785793.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center center;
+            background-color: #f0f0f0;
+        }
+
+
+        .header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        input, select, button {
+            margin-bottom: 10px;
+            width: calc(100% - 20px);
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .result {
+            text-align: left;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Temperature Converter</h1>
+    </div>
+
+    <div class="container">
+        <input type="number" id="temperature" placeholder="Enter temperature" required>
+        <select id="unit">
+            <option value="celsius">Celsius</option>
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="kelvin">Kelvin</option>
+        </select>
+        <button onclick="convertTemperature()">Convert</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <div class="footer">
+        &copy; 2023 Temperature Converter
+    </div>
+
+    <script>
+        function convertTemperature() {
+            var temperature = parseFloat(document.getElementById('temperature').value);
+            var unit = document.getElementById('unit').value;
+            var resultElement = document.getElementById('result');
+            var result;
+
+            if (isNaN(temperature)) {
+                resultElement.innerText = "Please enter a valid number for temperature.";
+                return;
+            }
+
+            // Clear previous results
+            resultElement.innerHTML = '';
+
+            if (unit === 'celsius') {
+                result = {
+                    fahrenheit: (temperature * 9/5) + 32,
+                    kelvin: temperature + 273.15
+                };
+            } else if (unit === 'fahrenheit') {
+                result = {
+                    celsius: (temperature - 32) * 5/9,
+                    kelvin: ((temperature - 32) * 5/9) + 273.15
+                };
+            } else {
+                result = {
+                    celsius: temperature - 273.15,
+                    fahrenheit: ((temperature - 273.15) * 9/5) + 32
+                };
+            }
+
+            // Display the new results
+            if ('celsius' in result) {
+                resultElement.innerHTML += `<p>Celsius: ${result.celsius.toFixed(2)}</p>`;
+            }
+
+            if ('fahrenheit' in result) {
+                resultElement.innerHTML += `<p>Fahrenheit: ${result.fahrenheit.toFixed(2)}</p>`;
+            }
+
+            if ('kelvin' in result) {
+                resultElement.innerHTML += `<p>Kelvin: ${result.kelvin.toFixed(2)}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
